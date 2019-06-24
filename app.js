@@ -1,5 +1,5 @@
 new Vue({
-    el: '#app', 
+    el: '#app',
     data: {
         playerHealth: 100,
         monsterHealth: 100,
@@ -7,14 +7,14 @@ new Vue({
         turns: []
     },
     methods: {
-        startGame: function() {
+        startGame: function () {
             this.gameIsRunning = true;
             this.playerHealth = 100;
             this.monsterHealth = 100;
             this.turns = [];
         },
-        attack: function() {
-            var damage = this.calculateDamage(3,10)
+        attack: function () {
+            var damage = this.calculateDamage(3, 10);
             this.monsterHealth -= damage;
             this.turns.unshift({
                 isPlayer: true,
@@ -23,9 +23,10 @@ new Vue({
             if (this.checkWin()) {
                 return;
             }
+
             this.monsterAttacks();
         },
-        specialAttack: function() {
+        specialAttack: function () {
             var damage = this.calculateDamage(10, 20);
             this.monsterHealth -= damage;
             this.turns.unshift({
@@ -37,7 +38,7 @@ new Vue({
             }
             this.monsterAttacks();
         },
-        heal: function() {
+        heal: function () {
             if (this.playerHealth <= 90) {
                 this.playerHealth += 10;
             } else {
@@ -49,11 +50,11 @@ new Vue({
             });
             this.monsterAttacks();
         },
-        giveUp: function() {
+        giveUp: function () {
             this.gameIsRunning = false;
         },
         monsterAttacks: function() {
-            var damage = this.calculateDamage(5, 12)
+            var damage = this.calculateDamage(5, 12);
             this.playerHealth -= damage;
             this.checkWin();
             this.turns.unshift({
@@ -66,21 +67,21 @@ new Vue({
         },
         checkWin: function() {
             if (this.monsterHealth <= 0) {
-                if (confirm('You won! New game?')) {
+                if (confirm('You won! New Game?')) {
                     this.startGame();
                 } else {
                     this.gameIsRunning = false;
                 }
-                return;
+                return true;
             } else if (this.playerHealth <= 0) {
-                if (confirm('You lost! New game?')) {
+                if (confirm('You lost! New Game?')) {
                     this.startGame();
                 } else {
                     this.gameIsRunning = false;
-                } 
+                }
                 return true;
-            } 
+            }
             return false;
         }
     }
-})
+});
